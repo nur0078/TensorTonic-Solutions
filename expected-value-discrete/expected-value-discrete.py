@@ -14,5 +14,3 @@ def expected_value_discrete(x, p):
         raise ValueError("Probabilities must sum to 1")
     
     return float(np.sum(x * p))
-
-    pass
