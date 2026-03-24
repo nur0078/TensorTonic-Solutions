@@ -19,5 +19,3 @@ def precision_recall_at_k(recommended, relevant, k):
     recall = hits / len(relevant)
 
     return([precision, recall])
-
-    
