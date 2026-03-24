@@ -11,5 +11,3 @@ def entropy_node(y):
 
     p = occurrence_count / total_count
     return -np.sum(p * np.log2(p))
-     
-    return entropy
