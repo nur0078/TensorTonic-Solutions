@@ -6,7 +6,7 @@ def precision_recall_at_k(recommended, relevant, k):
     # Write code here
     #top-k as a set
     top_k = set(recommended[:k])
-    #relevant sets so we get O(1) lookup time
+    #relevant as sets, so we get O(1) lookup time
     rel_items = set(relevant)
 
     #top_k in relevant set
