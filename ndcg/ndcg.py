@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 def ndcg(relevance_scores, k):
     
@@ -24,7 +23,7 @@ def ndcg(relevance_scores, k):
         for i in range(iter):
             c = i+1 #counting index from 1
             upper = float((2**rel[i]) - 1)
-            lower = float(np.log2(c + 1))
+            lower = float(math.log2(c + 1))
             # print(rel[i], upper, lower)
     
             if lower==0:
