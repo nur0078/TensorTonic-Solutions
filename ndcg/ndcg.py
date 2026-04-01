@@ -1,50 +1,18 @@
 import math
 
 def ndcg(relevance_scores, k):
+    """Compute NDCG@k."""
     
-    """
-    Compute NDCG@k.
-    """
-    # Write code here
-    og = relevance_scores.copy()
-    (relevance_scores).sort(reverse=True)
-    rel = relevance_scores
-
+    def dcg(scores, k):
+        return sum(
+            (2 ** scores[i] - 1) / math.log2(i + 2)
+            for i in range(min(k, len(scores)))
+        )
     
+    ideal = sorted(relevance_scores, reverse=True)
+    idcg = dcg(ideal, k)
     
-    def dcg(k, rel):
-        dcg_val = []
-
-        if k > len(rel):
-            iter = len(rel)
-        else:
-            iter = k
-            
-        for i in range(iter):
-            c = i+1 #counting index from 1
-            upper = float((2**rel[i]) - 1)
-            lower = float(math.log2(c + 1))
-            # print(rel[i], upper, lower)
-    
-            if lower==0:
-                dcg_val.append(0)
-            else:
-                val = upper/lower
-                dcg_val.append(val)
-        return dcg_val
-
-
-    idcg = sum(dcg(k, rel))   
-
-    
-    if og == rel:
-        my_dcg=idcg
-    else:
-        my_dcg=sum(dcg(k, og))
-
-
-
     if idcg == 0:
         return 0
-    else:
-        return (my_dcg / idcg)
+    
+    return dcg(relevance_scores, k) / idcg
