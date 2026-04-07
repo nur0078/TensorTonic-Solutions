@@ -9,5 +9,7 @@ def tanh(x):
 
     tan = (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
 
+    # tan = np.tanh(np.asarray(x))
+
     return(tan)
     pass
