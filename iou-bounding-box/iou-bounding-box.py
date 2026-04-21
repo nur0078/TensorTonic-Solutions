@@ -1,30 +1,27 @@
 def iou(box_a, box_b):
     """
     Compute Intersection over Union of two bounding boxes.
+
+    Each box is [x1, y1, x2, y2] with (x1, y1) top-left and
+    (x2, y2) bottom-right. Returns IoU in [0.0, 1.0].
     """
-    # Write code here
-    #area of given boxes
-    area_a = abs(box_a[2] - box_a[0]) * abs(box_a[3]-box_a[1])
-    area_b = abs(box_b[2] - box_b[0]) * abs(box_b[3] - box_b[1])
-    
-    #intersection
-    x_left = max(box_a[0], box_b[0])
-    y_top = max(box_a[1], box_b[1])
-    x_right = min(box_a[2], box_b[2])
+    # Intersection rectangle
+    x_left   = max(box_a[0], box_b[0])
+    y_top    = max(box_a[1], box_b[1])
+    x_right  = min(box_a[2], box_b[2])
     y_bottom = min(box_a[3], box_b[3])
 
-    width = abs(x_right - x_left)
-    height = abs(y_top - y_bottom)
+    # No overlap on either axis
+    if x_right <= x_left or y_bottom <= y_top:
+        return 0.0
 
-    #intersection area
-    intersect_area = float (width * height)
-    
+    intersect_area = (x_right - x_left) * (y_bottom - y_top)
 
-    a_union_b = float (area_a + area_b - intersect_area)
+    area_a = (box_a[2] - box_a[0]) * (box_a[3] - box_a[1])
+    area_b = (box_b[2] - box_b[0]) * (box_b[3] - box_b[1])
+    union_area = area_a + area_b - intersect_area
 
-    iou = intersect_area / a_union_b
+    if union_area <= 0:
+        return 0.0
 
-    if x_left < x_right:
-        return iou
-    return 0.0
-    pass
+    return intersect_area / union_area
